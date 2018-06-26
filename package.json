@@ -1,0 +1,27 @@
+{
+  "name": "searchable_table_sample",
+  "version": "1.0.0",
+  "description": "The table with search and sort function.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack-dev-server --config webpack.config.js",
+    "deploy": "sudo cp -p dist/bundle.js index.html /var/www/html/searchable_table_sample/"
+  },
+  "keywords": [
+    "csv",
+    "vue.js",
+    "sample"
+  ],
+  "author": "Kentarou Mamiya",
+  "license": "MIT",
+  "dependencies": {
+    "csv": "^3.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.12.1",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-cli": "^3.0.8"
+  }
+}
