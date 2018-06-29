@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>The table with Search and Sort function</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      article { width: 1024px; background-color: #eee; }
+      #operation p { text-align: right; }
+      .postal-code { width: 10em; }
+      .prefectures { width: 5em; }
+      input { width: 95%; }
+    </style>
+  </head>
+  <body>
+    <h1>東京都の郵便番号・住所一覧</h1>
+    <p>サンプルデータとして<a href="http://www.post.japanpost.jp/zipcode/download.html">郵便番号データダウンロード - 日本郵便</a>より、「<a href="http://www.post.japanpost.jp/zipcode/dl/kogaki-zip.html">読み仮名データの促音・拗音を小書きで表記するもの(zip形式)</a>」の「東京都」をダウンロードし、内容物の「13TOKYO.CSV」を<code>iconv -f sjis -t utf8</code>にてUTF-8へ変換、使用しています。</p>
+    <p>使用データは2018年6月26日現在のものです。データの更新は特に行っておりませんので、実際の住所検索には使用しないでください。</p>
+    <article id="main">
+      <div id="operation">
+        <p>絞り込み結果 {{records.length}} 件 / 総数 {{postalCodes.length}} 件</p>
+      </div>
+      <table id="target" class="seachable sortble">
+        <thead>
+          <tr>
+            <th class="postal-code" data-col="postalCode" v-on:click="sort">郵便番号</th>
+            <th class="prefectures" data-col="prefectures" v-on:click="sort">都道府県</th>
+            <th class="city" data-col="city" v-on:click="sort">市町村</th>
+            <th class="address" data-col="address" v-on:click="sort">番地以降</th>
+          </tr>
+          <tr>
+            <td><input type="text" v-model="searchWordPostalCode" /></td>
+            <td><input type="text" v-model="searchWordPrefectures" /></td>
+            <td><input type="text" v-model="searchWordCity" /></td>
+            <td><input type="text" v-model="searchWordAddress" /></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(rec, index) in records" :key="index">
+            <td>{{formattedPostalCode(rec.postalCode)}}</td>
+            <td>{{rec.prefectures}}</td>
+            <td>{{rec.city}}</td>
+            <td>{{rec.address}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+    <script src="./bundle.js"></script>
+  </body>
+</html>
